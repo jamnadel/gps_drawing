@@ -37,41 +37,25 @@ geolocate.on('geolocate', function(event) {
 
 })
 
+let current_location = [-73.96216, 40.80779]
+
+geolocate.on('geolocate', function(event) {
+    current_location = [event.coords.longitude, event.coords.latitude]
+    console.log('geolocated', current_location)   
+})
+
 map.on('click', function(event) {
+    current_location = [event.lngLat.lng, event.lngLat.lat]
+    console.log('clicked', current_location)        
+})
 
- 
-    let features = map.queryRenderedFeatures({ layers: ['rat-sightings'] })
-    console.log(features)
+let draw_btn = document.getElementById('draw_btn')
 
-
-    let current_location = [event.lngLat.lng, event.lngLat.lat]
-    console.log("Click location:", current_location)
-
-      if (features.length == 0) return
-
-        let closest_distance = Infinity
-    let closest_feature = null
-
-      for (let feature of features) {
-
-                let distance = turf.distance(turf.point(feature.geometry.coordinates), turf.point(current_location))
-
-       
-        if (distance < closest_distance) {
-            closest_distance = distance
-            closest_feature = feature
-        }        
-
-    }
-
-       console.log("Closest feature:", closest_feature.geometry.coordinates, "(", closest_distance, "m)")
-
-let bearing = turf.bearing(turf.point(current_location), turf.point(closest_feature.geometry.coordinates))
-    console.log("Bearing:", bearing)
-
- var pointer = document.getElementById('pointer')
-    pointer.style.transform = 'rotate(' + bearing + 'deg)'
-
- map.flyTo({ center: current_location })   
+draw_btn.addEventListener('click', function() {
+    console.log('clicked draw_btn')                 
 
 })
+
+
+
+
