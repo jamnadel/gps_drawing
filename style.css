@@ -9,10 +9,14 @@ body, html {
     top: 0;
     bottom: 0;
     width: 100%;
+}
 
 #draw_btn {
     position: absolute;
     left: 10px;
     top: 200px;
-}
-    
+    z-index: 999999;
+ }
+
+
+
